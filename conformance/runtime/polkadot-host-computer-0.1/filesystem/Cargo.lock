@@ -58,7 +58,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "pvm-computer-filesystem"
+name = "polkavm-computer-filesystem"
 version = "0.1.0"
 dependencies = [
  "polkavm-derive",

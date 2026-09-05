@@ -1,19 +1,19 @@
 [workspace]
 resolver = "2"
 members = [
-    "rust/crates/pvm-gpu-wire",
-    "rust/crates/pvm-motion-wire",
-    "rust/crates/pvm-ui-wire",
-    "rust/crates/pvm-runtime",
-    "rust/crates/pvm-runtime-assets",
-    "rust/crates/pvm-assets-export",
+    "rust/crates/polkavm-gpu-wire",
+    "rust/crates/polkavm-motion-wire",
+    "rust/crates/polkavm-ui-wire",
+    "rust/crates/polkavm-host-runtime",
+    "rust/crates/polkavm-host-runtime-assets",
+    "rust/crates/polkavm-assets-export",
 ]
 
 [workspace.package]
-version = "0.1.14"
+version = "0.2.0"
 edition = "2021"
 license = "MPL-2.0"
-repository = "https://github.com/paritytech/pvm-host-runtime"
+repository = "https://github.com/paritytech/polkavm-host-runtime"
 
 [workspace.dependencies]
 uniffi = "0.32.0"

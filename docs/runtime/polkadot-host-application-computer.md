@@ -43,7 +43,7 @@ is a library above this ABI, not the platform contract.
          |               |                |
       POSIX shim      native Rust SDK   other SDKs
          |               |
-    Vim / Emacs /     native PVM
+    Vim / Emacs /     native PolkaVM
     SSH / Git           applications
 ```
 
@@ -72,16 +72,16 @@ Polkadot-specific services remain separate:
 This keeps general-purpose computing capabilities independent from
 chain-specific functionality.
 
-## Relationship to application ABI v1
+## Relationship to application ABI v2
 
 This is a separate execution contract, not an extension of the cooperative
-`init()` / `update()` PolkaVM application ABI v1. Long-lived entrypoints,
+`init()` / `update()` PolkaVM application ABI v2. Long-lived entrypoints,
 blocking or pollable I/O, mutable files, process exit status, terminals, and
 child VM supervision have materially different lifecycle semantics.
 
 The prototype interface is named `polkadot-host-computer/0.1`. A manifest must
 eventually select it explicitly. Existing applications requesting PolkaVM
-application ABI v1 retain their current behavior.
+application ABI v2 retain their current behavior.
 
 ## ABI principles
 
@@ -547,7 +547,7 @@ renders the supervisor's ANSI stream host-side through the shared terminal
 emulator and speaks the framebuffer-app wire protocol, so browser surfaces
 can present the computer without new message types.
 
-Browser Host: `js/packages/pvm-browser-runtime/src/pvm-computer.js` implements
+Browser Host: `js/packages/polkavm-browser-runtime/src/polkavm-computer.js` implements
 the same contract in JavaScript over the wasm-translated guest - context,
 tty/fs devices, supervisor, pipes, spawn gating, and network denial - and runs
 the identical `.polkavm` conformance fixtures in the browser test suite.
@@ -668,7 +668,7 @@ input_next_event()
 ```
 
 Do not make Wayland the base ABI. Hosts map surfaces to their native graphics
-systems. Browser integration starts with a Host webview, then a PVM browser
+systems. Browser integration starts with a Host webview, then a PolkaVM browser
 shell controlling that engine; a self-contained browser engine is a later
 stress test.
 
@@ -702,13 +702,13 @@ and C bindings plus Host stubs once the prototype signatures settle.
 
 ## Repository ownership
 
-`pvm-host-runtime` owns the ABI definitions, VM integration, capability and
+`polkavm-host-runtime` owns the ABI definitions, VM integration, capability and
 handle semantics, reference backends, and conformance fixtures.
 
 `polkavm-app-kit` owns packaged demonstration applications such as the shell,
 utilities, and editor.
 
-`host-rust-core` pins a reviewed `pvm-host-runtime` release and exposes it to
+`host-rust-core` pins a reviewed `polkavm-host-runtime` release and exposes it to
 concrete Polkadot Hosts. It does not carry a second runtime implementation.
 
 ## First development spike
@@ -760,7 +760,7 @@ explicitly deferred until this direct editor slice works.
   can be meaningful tests.
 - Native and browser implementations must run the same conformance fixtures.
 - This prototype introduces a second explicit execution contract rather than
-  overloading application ABI v1.
+  overloading application ABI v2.
 
 ## Deferred decisions
 

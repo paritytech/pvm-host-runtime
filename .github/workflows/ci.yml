@@ -48,7 +48,7 @@ jobs:
                 ;;
             esac
             case "$file" in
-              Cargo.toml|Cargo.lock|rust-toolchain.toml|package.json|package-lock.json|rust/crates/pvm-runtime/*|rust/crates/pvm-gpu-wire/*|rust/crates/pvm-motion-wire/*|rust/crates/pvm-runtime-assets/*|conformance/*|js/*|scripts/*|.github/*)
+              Cargo.toml|Cargo.lock|rust-toolchain.toml|package.json|package-lock.json|rust/crates/polkavm-host-runtime/*|rust/crates/polkavm-gpu-wire/*|rust/crates/polkavm-motion-wire/*|rust/crates/polkavm-host-runtime-assets/*|conformance/*|js/*|scripts/*|.github/*)
                 browser=true
                 ;;
             esac
@@ -83,7 +83,7 @@ jobs:
       - name: Test
         run: cargo test --workspace --all-features
       - name: Check browser target
-        run: cargo check --locked --release --target wasm32-unknown-unknown -p pvm-runtime
+        run: cargo check --locked --release --target wasm32-unknown-unknown -p polkavm-host-runtime
 
   browser:
     name: Browser runtime and assets
@@ -107,13 +107,13 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: reproduced-browser-assets
-          path: js/packages/pvm-browser-runtime/dist
+          path: js/packages/polkavm-browser-runtime/dist
       - name: Check browser package contents
-        run: npm pack --workspace @parity/pvm-browser-runtime --dry-run --json
+        run: npm pack --workspace @parity/polkavm-browser-runtime --dry-run --json
       - name: Check asset exporter
         run: |
-          cargo run --locked -p pvm-assets-export -- --output "$RUNNER_TEMP/pvm-assets"
-          diff -r rust/crates/pvm-runtime-assets/assets "$RUNNER_TEMP/pvm-assets"
+          cargo run --locked -p polkavm-assets-export -- --output "$RUNNER_TEMP/polkavm-assets"
+          diff -r rust/crates/polkavm-host-runtime-assets/assets "$RUNNER_TEMP/polkavm-assets"
 
   merge-readiness:
     name: Merge readiness

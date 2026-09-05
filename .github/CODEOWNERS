@@ -1,4 +1,4 @@
 * @replghost
 
-/rust/crates/pvm-gpu-wire/ @replghost
+/rust/crates/polkavm-gpu-wire/ @replghost
 /docs/runtime/ @replghost

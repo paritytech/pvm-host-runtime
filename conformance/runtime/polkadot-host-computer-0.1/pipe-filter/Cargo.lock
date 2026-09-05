@@ -58,7 +58,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "pvm-computer-pipe-filter"
+name = "polkavm-computer-pipe-filter"
 version = "0.1.0"
 dependencies = [
  "polkavm-derive",

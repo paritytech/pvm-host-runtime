@@ -1,0 +1,11 @@
+[package]
+name = "polkavm-assets-export"
+version = "0.2.0"
+edition = "2021"
+description = "Exports host-neutral PolkaVM browser runtime assets"
+license = "MPL-2.0"
+repository = "https://github.com/paritytech/polkavm-host-runtime"
+publish = false
+
+[dependencies]
+polkavm-host-runtime-assets = { version = "0.2.0", path = "../polkavm-host-runtime-assets" }

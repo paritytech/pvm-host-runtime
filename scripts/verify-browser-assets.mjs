@@ -3,8 +3,8 @@ import { readFile, readdir } from "node:fs/promises";
 import { resolve } from "node:path";
 
 const root = resolve(import.meta.dirname, "..");
-const dist = resolve(root, "js/packages/pvm-browser-runtime/dist");
-const embedded = resolve(root, "rust/crates/pvm-runtime-assets/assets");
+const dist = resolve(root, "js/packages/polkavm-browser-runtime/dist");
+const embedded = resolve(root, "rust/crates/polkavm-host-runtime-assets/assets");
 
 const distFiles = (await readdir(dist)).sort();
 const embeddedFiles = (await readdir(embedded)).sort();

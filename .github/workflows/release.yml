@@ -39,17 +39,117 @@ jobs:
       - name: Package release artifacts
         run: |
           mkdir -p artifacts
-          npm pack --workspace @parity/pvm-browser-runtime --pack-destination artifacts
+          npm pack --workspace @parity/polkavm-browser-runtime --pack-destination artifacts
           version="$(node -p "require('./package.json').version")"
           tar --sort=name --mtime=@1 --owner=0 --group=0 --numeric-owner \
-            -czf "artifacts/pvm-runtime-assets-$version.tar.gz" \
-            -C rust/crates/pvm-runtime-assets assets
+            -czf "artifacts/polkavm-host-runtime-assets-$version.tar.gz" \
+            -C rust/crates/polkavm-host-runtime-assets assets
           npm run manifest
+      - name: Upload npm package artifact
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+        with:
+          name: npm-packages
+          path: artifacts/parity-polkavm-browser-runtime-*.tgz
+          if-no-files-found: error
+      - name: Require npm publish automation
+        env:
+          NPM_PUBLISH_AUTOMATION_TOKEN: ${{ secrets.NPM_PUBLISH_AUTOMATION_TOKEN }}
+        run: |
+          test -n "$NPM_PUBLISH_AUTOMATION_TOKEN" || {
+            echo "NPM_PUBLISH_AUTOMATION_TOKEN is required to publish the browser runtime" >&2
+            exit 1
+          }
+      - name: Publish browser runtime to npm
+        timeout-minutes: 35
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
+        with:
+          github-token: ${{ secrets.NPM_PUBLISH_AUTOMATION_TOKEN }}
+          script: |
+            const owner = 'paritytech';
+            const repo = 'npm_publish_automation';
+            const workflowId = 'publish.yml';
+            const upstreamRunId = String(context.runId);
+            const expectedRunName =
+              `Publish ${context.repo.owner}/${context.repo.repo} (${upstreamRunId})`;
+            const sleep = (milliseconds) =>
+              new Promise((resolve) => setTimeout(resolve, milliseconds));
+            const dispatchedAfter = Date.now() - 60_000;
+
+            await github.rest.actions.createWorkflowDispatch({
+              owner,
+              repo,
+              workflow_id: workflowId,
+              ref: 'main',
+              inputs: {
+                repo: `${context.repo.owner}/${context.repo.repo}`,
+                run_id: upstreamRunId,
+                artifact_name: 'npm-packages',
+              },
+            });
+
+            let publishRun;
+            const discoveryDeadline = Date.now() + 3 * 60_000;
+            while (!publishRun && Date.now() < discoveryDeadline) {
+              const { data } = await github.request(
+                'GET /repos/{owner}/{repo}/actions/workflows/{workflow_id}/runs',
+                {
+                  owner,
+                  repo,
+                  workflow_id: workflowId,
+                  event: 'workflow_dispatch',
+                  per_page: 100,
+                },
+              );
+              publishRun = data.workflow_runs.find(
+                (run) =>
+                  (run.name === expectedRunName ||
+                    run.display_title === expectedRunName) &&
+                  Date.parse(run.created_at) >= dispatchedAfter,
+              );
+              if (!publishRun) {
+                await sleep(5_000);
+              }
+            }
+
+            if (!publishRun) {
+              throw new Error(
+                `npm publication run did not appear for upstream run ${upstreamRunId}`,
+              );
+            }
+
+            core.info(`Waiting for npm publication: ${publishRun.html_url}`);
+            const completionDeadline = Date.now() + 30 * 60_000;
+            while (
+              publishRun.status !== 'completed' &&
+              Date.now() < completionDeadline
+            ) {
+              await sleep(10_000);
+              const { data } = await github.request(
+                'GET /repos/{owner}/{repo}/actions/runs/{run_id}',
+                {
+                  owner,
+                  repo,
+                  run_id: publishRun.id,
+                },
+              );
+              publishRun = data;
+            }
+
+            if (publishRun.status !== 'completed') {
+              throw new Error(
+                `npm publication timed out: ${publishRun.html_url}`,
+              );
+            }
+            if (publishRun.conclusion !== 'success') {
+              throw new Error(
+                `npm publication ${publishRun.conclusion}: ${publishRun.html_url}`,
+              );
+            }
       - name: Publish immutable GitHub release
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           gh release create "$GITHUB_REF_NAME" artifacts/* \
             --verify-tag \
-            --title "PVM Host Runtime $GITHUB_REF_NAME" \
+            --title "PolkaVM Host Runtime $GITHUB_REF_NAME" \
             --generate-notes

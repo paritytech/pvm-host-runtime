@@ -58,7 +58,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "pvm-computer-pipe-driver"
+name = "polkavm-computer-pipe-driver"
 version = "0.1.0"
 dependencies = [
  "polkavm-derive",

@@ -1,7 +1,7 @@
 [workspace]
 
 [package]
-name = "pvm-computer-tty-fs-roundtrip"
+name = "polkavm-computer-tty-fs-roundtrip"
 version = "0.1.0"
 edition = "2021"
 license = "MPL-2.0"

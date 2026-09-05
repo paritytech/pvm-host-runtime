@@ -133,4 +133,4 @@ The Host clears the surface using the header color, executes draws in order with
 | 2 | a stream was already submitted during this call |
 | 3 | Tri2D is unavailable for this execution |
 
-The constants and stateful validator for this contract are exported by `pvm-gpu-wire::tri2d`. Host implementations and guest encoders must consume that shared definition rather than maintain private opcode or limit tables.
+The constants and stateful validator for this contract are exported by `polkavm-gpu-wire::tri2d`. Host implementations and guest encoders must consume that shared definition rather than maintain private opcode or limit tables.

@@ -12,7 +12,7 @@ experimental hosts implement it as a prototype.
 ## Motivation
 
 A PolkaVM program blob does not self-describe which host contract it
-expects: cartridge guests (application ABI v1) and computer guests
+expects: cartridge guests (application ABI v2) and computer guests
 (`polkadot-host` interfaces) are both PolkaVM bytecode exporting
 `_pvm_start`. Hosts must decide the execution model and the authority
 grant *before* running anything, and users must be able to see what an

@@ -58,7 +58,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "pvm-computer-core-context"
+name = "polkavm-computer-core-context"
 version = "0.1.0"
 dependencies = [
  "polkavm-derive",

@@ -1,0 +1,15 @@
+[package]
+name = "polkavm-gpu-wire"
+version = "0.2.0"
+edition = "2021"
+description = "Bounded host-neutral Tri2D and WebGPU wire protocols for PolkaVM applications"
+license = "MPL-2.0"
+repository = "https://github.com/paritytech/polkavm-host-runtime"
+publish = false
+
+[features]
+default = []
+tri2d-validation = []
+
+[lib]
+crate-type = ["rlib"]

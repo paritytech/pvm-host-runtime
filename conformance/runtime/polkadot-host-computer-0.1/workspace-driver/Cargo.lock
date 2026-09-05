@@ -58,7 +58,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "pvm-computer-workspace-driver"
+name = "polkavm-computer-workspace-driver"
 version = "0.1.0"
 dependencies = [
  "polkavm-derive",

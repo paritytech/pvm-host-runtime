@@ -1,0 +1,15 @@
+[package]
+name = "polkavm-host-runtime-assets"
+version = "0.2.0"
+edition = "2021"
+description = "Source-built browser assets for the host-neutral PolkaVM runtime"
+license = "MPL-2.0"
+repository = "https://github.com/paritytech/polkavm-host-runtime"
+publish = false
+include = ["src/**", "assets/**", "Cargo.toml"]
+
+[lib]
+crate-type = ["rlib"]
+
+[dev-dependencies]
+sha2 = "0.10"

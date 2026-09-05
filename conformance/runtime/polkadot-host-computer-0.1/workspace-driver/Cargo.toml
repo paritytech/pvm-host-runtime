@@ -1,7 +1,7 @@
 [workspace]
 
 [package]
-name = "pvm-computer-workspace-driver"
+name = "polkavm-computer-workspace-driver"
 version = "0.1.0"
 edition = "2021"
 license = "MPL-2.0"

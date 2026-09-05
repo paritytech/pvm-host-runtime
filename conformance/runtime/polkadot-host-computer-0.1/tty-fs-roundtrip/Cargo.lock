@@ -58,7 +58,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "pvm-computer-tty-fs-roundtrip"
+name = "polkavm-computer-tty-fs-roundtrip"
 version = "0.1.0"
 dependencies = [
  "polkavm-derive",

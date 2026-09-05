@@ -1,4 +1,4 @@
-# PVM Host Runtime
+# PolkaVM Host Runtime
 
 Host-neutral PolkaVM application runtime for native and browser Hosts.
 
@@ -6,19 +6,19 @@ The repository owns one implementation of the App Manifest v2 PolkaVM execution 
 
 ## Layout
 
-- `rust/crates/pvm-runtime`: execution, hostcalls, lifecycle, bounds, and native/wasm backends.
-- `rust/crates/pvm-gpu-wire`: bounded Tri2D and WebGPU wire protocol.
-- `rust/crates/pvm-motion-wire`: bounded motion-sample wire protocol.
-- `rust/crates/pvm-ui-wire`: bounded cursor, clipboard, navigation, and IME output protocol.
-- `rust/crates/pvm-runtime-assets`: source-identified browser assets exposed as static Rust data.
-- `rust/crates/pvm-assets-export`: exports those assets for Android, iOS, and browser packaging.
-- `js/packages/pvm-browser-runtime`: source-built `@parity/pvm-browser-runtime` package.
-- `docs/runtime/polkavm-app-abi-v1.md`: application ABI contract.
+- `rust/crates/polkavm-host-runtime`: execution, hostcalls, lifecycle, bounds, and native/wasm backends.
+- `rust/crates/polkavm-gpu-wire`: bounded Tri2D and WebGPU wire protocol.
+- `rust/crates/polkavm-motion-wire`: bounded motion-sample wire protocol.
+- `rust/crates/polkavm-ui-wire`: bounded cursor, clipboard, navigation, and IME output protocol.
+- `rust/crates/polkavm-host-runtime-assets`: source-identified browser assets exposed as static Rust data.
+- `rust/crates/polkavm-assets-export`: exports those assets for Android, iOS, and browser packaging.
+- `js/packages/polkavm-browser-runtime`: source-built `@parity/polkavm-browser-runtime` package.
+- `docs/runtime/polkavm-app-abi-v2.md`: application ABI contract.
 - `docs/runtime/tri2d-v1.md`: Tri2D frame, command, retained-resource, and limit contract.
 
 ## Host boundary
 
-Hosts integrate through the `truapi-pvm-host` bridge in [`paritytech/host-rust-core`](https://github.com/paritytech/host-rust-core). The bridge pins one immutable release of this repository and exposes the supported Rust API plus browser asset identity. Host applications do not pin this repository independently.
+Hosts integrate through the `truapi-polkavm-host` bridge in [`paritytech/host-rust-core`](https://github.com/paritytech/host-rust-core). The bridge pins one immutable release of this repository and exposes the supported Rust API plus browser asset identity. Host applications do not pin this repository independently.
 
 ## Build and test
 
@@ -34,7 +34,7 @@ Build and export browser assets:
 
 ```bash
 npm run build
-cargo run -p pvm-assets-export -- --output ./out/pvm-runtime
+cargo run -p polkavm-assets-export -- --output ./out/polkavm-host-runtime
 ```
 
 ## Releases
@@ -42,7 +42,7 @@ cargo run -p pvm-assets-export -- --output ./out/pvm-runtime
 A release is identified by one source commit and records:
 
 - Rust workspace version.
-- `@parity/pvm-browser-runtime` version.
+- `@parity/polkavm-browser-runtime` version.
 - native and wasm PolkaVM revisions.
 - SHA-256 digest of every browser artifact.
 

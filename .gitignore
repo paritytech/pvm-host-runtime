@@ -1,6 +1,6 @@
 /target/
 /node_modules/
-/js/packages/pvm-browser-runtime/dist/
+/js/packages/polkavm-browser-runtime/dist/
 *.tgz
 .DS_Store
 /artifacts/

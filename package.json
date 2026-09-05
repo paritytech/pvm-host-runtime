@@ -1,7 +1,7 @@
 {
-  "name": "pvm-host-runtime-workspace",
+  "name": "polkavm-host-runtime-workspace",
   "private": true,
-  "version": "0.1.14",
+  "version": "0.2.0",
   "description": "Host-neutral PolkaVM application runtime workspace",
   "license": "MPL-2.0",
   "type": "module",
@@ -9,11 +9,11 @@
     "js/packages/*"
   ],
   "scripts": {
-    "build": "npm run build --workspace @parity/pvm-browser-runtime",
-    "test": "npm run test --workspace @parity/pvm-browser-runtime && node scripts/verify-browser-assets.mjs",
+    "build": "npm run build --workspace @parity/polkavm-browser-runtime",
+    "test": "npm run test --workspace @parity/polkavm-browser-runtime && node scripts/verify-browser-assets.mjs",
     "verify:assets": "node scripts/verify-browser-assets.mjs",
     "manifest": "node scripts/create-release-manifest.mjs --output artifacts/runtime-release.json",
-    "pack:browser": "npm pack --workspace @parity/pvm-browser-runtime"
+    "pack:browser": "npm pack --workspace @parity/polkavm-browser-runtime"
   },
   "engines": {
     "node": ">=22"

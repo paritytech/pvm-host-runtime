@@ -12,11 +12,11 @@ const packageJson = JSON.parse(
   await readFile(resolve(root, "package.json"), "utf8"),
 );
 const source = await readFile(
-  resolve(root, "js/packages/pvm-browser-runtime/SOURCE"),
+  resolve(root, "js/packages/polkavm-browser-runtime/SOURCE"),
   "utf8",
 );
 const sums = await readFile(
-  resolve(root, "js/packages/pvm-browser-runtime/dist/SHA256SUMS"),
+  resolve(root, "js/packages/polkavm-browser-runtime/dist/SHA256SUMS"),
   "utf8",
 );
 const artifacts = {};
@@ -24,7 +24,7 @@ for (const line of sums.trim().split("\n")) {
   const [sha256, file] = line.split(/\s+/, 2);
   artifacts[file] = {
     sha256,
-    size: (await stat(resolve(root, "js/packages/pvm-browser-runtime/dist", file)))
+    size: (await stat(resolve(root, "js/packages/polkavm-browser-runtime/dist", file)))
       .size,
   };
 }
@@ -45,15 +45,15 @@ if (!/^[0-9a-f]{40}$/.test(sourceRevision)) {
 const manifest = {
   schemaVersion: 1,
   version: packageJson.version,
-  sourceRepository: "https://github.com/paritytech/pvm-host-runtime",
+  sourceRepository: "https://github.com/paritytech/polkavm-host-runtime",
   sourceRevision,
   rustCrates: {
-    "pvm-runtime": packageJson.version,
-    "pvm-gpu-wire": packageJson.version,
-    "pvm-runtime-assets": packageJson.version,
+    "polkavm-host-runtime": packageJson.version,
+    "polkavm-gpu-wire": packageJson.version,
+    "polkavm-host-runtime-assets": packageJson.version,
   },
   npmPackages: {
-    "@parity/pvm-browser-runtime": packageJson.version,
+    "@parity/polkavm-browser-runtime": packageJson.version,
   },
   polkavm: {
     nativeRevision: revision("PolkaVM native revision"),
