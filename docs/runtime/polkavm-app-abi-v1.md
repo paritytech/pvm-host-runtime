@@ -586,8 +586,8 @@ read-write data                       64 MiB
 stack                                 16 MiB
 heap                                  128 MiB
 asset files                           2,048
-one asset                             64 MiB
-all assets                            128 MiB
+one asset                             128 MiB
+all assets                            256 MiB
 one asset read                        16 MiB
 Host-call bytes per init/update       32 MiB
 Host calls during init                131,072
